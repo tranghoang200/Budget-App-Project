@@ -67,5 +67,57 @@ const BudgetController = (function () {
             return newItem;
         }, 
         
+        deleteItem: function(type, id) {
+            const ids, index;
+            
+            ids = data.allItems[type].map(function(current) {
+                return current.id;
+            });
+            
+            index = ids.indexOf(id);
+            
+            if(index !== -1) {
+                data.allItems[type].splice(index, 1);
+            }
+        },
+        
+        calculateBudget: function() {
+            
+            // Calculate the total
+            calculateTotal('exp');
+            calculateTotal('inc');
+            
+            // Calculate budget
+            data.budget = data.totals.inc - data.totals.exp;
+            
+            // Calculate the percentage 
+            if(data.totals.inc > 0) {
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+            } else {
+                data.percentage = -1;
+            }
+        },
+        
+        calculatePercentages: function() {
+            data.allItems.exp.forEach(function(cur) {
+                cur.calcPercentage(data.totals.inc);
+            });
+        },
+        
+        getPercentages: function() {
+            const allPercentage = data.allItems.exp.map(function(cur) {
+                return cur.getPercentage();
+            });
+            return allPercentage;
+        },
+        
+        getBudget: function() {
+            return {
+                budget: data.budget,
+                totalInc: data.totals.inc,
+                totalExp: data.totals.exp,
+                percentage: data.percentage
+            }
+        };
     }
 })();
