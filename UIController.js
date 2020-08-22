@@ -43,8 +43,57 @@ const UIController = (function () {
     
     
     return {
-        getDOMStrings: function () {
-            DOMString;
+        getInput: function() {
+            return {
+                type: document.querySelector(DOMStrings.inputType).value, 
+                description: document.querySelector(DOMstrings.inputDescription).value,
+                value: parseFloat(document.querySelector(DOMStrings.inputValue).value)
+            }
+        },
+        
+        addListItem: function(obj, type) {
+            const html, newHtml, element;
+            
+            if(type === 'inc') {
+                element = DOMStrings.incomeContainer;
+                
+                html =  '<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            } else if(type === 'exp') {
+                element = DOMStrings.expensesContainer;
+                
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            };
+                
+                newHtml = html.replace('%id%', obj.id);
+                newHtml = newHtml.replace('%description%', obj.description);
+                newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
+                
+                
+                document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+            
+        },
+        
+        deleteListItem: function(selectorID) {
+            const el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
+        },
+        
+        clearFields: function() {
+            const fields, fieldsArr;
+            
+            fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMStrings.inputValue);
+            
+            fieldsArr = Array.prototype.slice.call(fields);
+            
+            fields.forEach(function(current, index, array) {
+                current.value = "";
+            });
+            
+            fieldsArr[0].focus();
+        },
+        
+        displayBudget: function(obj) {
+            
         }
     }
 
