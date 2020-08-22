@@ -1,17 +1,4 @@
-const UIController = (function () {
 
-    const DomString: {
-        addButton: 'add__btn',
-
-    }
-
-    return {
-        getDOMStrings: function () {
-            DOMString;
-        }
-    }
-
-})();
 
 const controller = (function (BudgetCtrl, UICtrl) {
 
