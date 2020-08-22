@@ -1,4 +1,4 @@
-const UIController = (function () {
+export default UIController = (function () {
 
     var DOMstrings = {
         inputType: '.add__type',

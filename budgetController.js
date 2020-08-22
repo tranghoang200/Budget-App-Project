@@ -1,4 +1,4 @@
-const BudgetController = (function () {
+export default BudgetController = (function () {
 
     const Expense = function (id, description, value) {
         this.id = id;
